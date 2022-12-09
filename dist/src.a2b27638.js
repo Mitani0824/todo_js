@@ -177,7 +177,65 @@ module.hot.accept(reloadCSS);
 
 require("./styles.css");
 var onClickAdd = function onClickAdd() {
-  alert();
+  //テキストボックスの値を取得し、初期化する
+  var Inputtxt = document.getElementById("add-txt").value;
+  document.getElementById("add-txt").value = "";
+
+  //divタグの生成
+  var div = document.createElement("div");
+  div.className = "list-row";
+
+  //liタグの生成
+  var li = document.createElement("li");
+  li.innerText = Inputtxt;
+  // console.log(li);
+
+  //divタグの子要素に各要素を設定
+
+  //console.log(div);
+
+  //buttonの完了
+  var completeButton = document.createElement("button");
+  completeButton.innerText = "完了";
+  completeButton.addEventListener("click", function () {
+    deletefromList(completeButton.parentNode);
+    var addTarget = completeButton.parentNode;
+    //todoの内容を取得
+    var txt = addTarget.firstElementChild.innerText;
+    //divの初期化
+    addTarget.textContent = null;
+    // console.log(addTarget);
+
+    var li = document.createElement("li");
+    li.innerText = txt;
+    var backButton = document.createElement("button");
+    backButton.innerText = "戻す";
+
+    //divタグの子要素に各要素を設定
+    addTarget.appendChild(li);
+    addTarget.appendChild(backButton);
+    // console.log(addTarget);
+
+    console.log(document.getElementById("complete_list"));
+    //完了リストに追加
+
+    //ここが問題。addTargetをHTMLに渡せてない
+    document.getElementById("complete_list").appendChild(addTarget);
+  });
+  var deleteButton = document.createElement("button");
+  deleteButton.innerText = "削除";
+  deleteButton.addEventListener("click", function () {
+    deletefromList(deleteButton.parentNode);
+  });
+  div.appendChild(li);
+  div.appendChild(completeButton);
+  div.appendChild(deleteButton);
+  document.getElementById("incomplete_list").appendChild(div);
+};
+
+//未完了リストから指定の要素を削除
+var deletefromList = function deletefromList(target) {
+  document.getElementById("incomplete_list").removeChild(target);
 };
 document.getElementById("add-button").addEventListener("click", function () {
   return onClickAdd();
